@@ -27,10 +27,15 @@ public class MainFrame extends Frame {
 	
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	
+	private static final int status_stop = 0;
+	private static final int status_running = 1;
+	private static final int status_pause = 2;
+	private int status = status_stop;
 	private int speed = 50;
 	private Image offScreenImage = null;
-
+	private Circle circle = new Circle();
+	private SF sf = new SF();
+	
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame();
 		mf.init();
@@ -144,15 +149,24 @@ public class MainFrame extends Frame {
 			});
 			panelRightMenu.add(slider);
 		}
+		{// 开始
+			JButton button_start = new JButton("start");
+			button_start.setMargin(new Insets(0, 0, 0, 0));
+			button_start.setFont(new Font("微软雅黑",Font.BOLD,20));
+			panelRightMenu.add(button_start);
+		}
 		this.setVisible(true);// 放最后，不然控件显示不出来
+		Param param = new Param(20,5,1);
+		circle.init(param);
 		new Thread(new PaintThread()).start();// 启动线程
 	}
 
 	@Override
 	public void paint(Graphics g) {// 画方法
-		g.setColor(Color.RED);
-		g.drawRect(0, 0, 90, 90);
-		g.fillOval(50, 50, 100, 100);
+//		g.setColor(Color.RED);
+//		g.drawRect(0, 0, 90, 90);
+//		g.fillOval(50, 50, 100, 100);
+		circle.draw(g);
 	}
 	
 	public void update(Graphics g) {

@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Person {
-	private int x, y;// 顶点坐标
-	final int d = 56, r = d / 2;
+	private int x, y;// 圆心坐标
+	final int d = 36, r = d / 2;
 	/**
 	 * 编号，从1开始
 	 */
@@ -17,10 +17,17 @@ public class Person {
 	
 	public void draw(Graphics g) {
 		Color c = g.getColor();
-		g.fillOval(x, y, d, d);
+		if(this.isAlive()) {
+			g.setColor(Color.GREEN);
+		}else {
+			g.setColor(Color.RED);
+		}
+		g.fillOval(x-r, y-r, d, d);
+		g.setColor(Color.BLACK);
+		g.drawString(this.getNumber()+"", x, y);
 		g.setColor(c);
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,9 +50,27 @@ public class Person {
 		return true;
 	}
 
-	public Person(int number, boolean alive) {
+	public Person(int number, boolean alive,int x,int y) {
 		this.number = number;
 		this.alive = alive;
+		this.x = x;
+		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 
 	public boolean isAlive() {

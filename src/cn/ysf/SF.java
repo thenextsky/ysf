@@ -32,19 +32,6 @@ public class SF {
 			}
 			System.out.println("此时状态：currentNumber:"+circle.getCurrentNumber());
 		}
-		System.out.println("===========");
-		Person p = circle.getCurrent();
-		System.out.println(p);
-		 p = circle.getCurrent();
-			System.out.println(p);
-			 p = circle.getCurrent();
-				System.out.println(p);
-		int c = circle.getCurrentNumber();
-		System.out.println(c);
-		c = circle.getCurrentNumber();
-		System.out.println(c);
-		c = circle.getCurrentNumber();
-		System.out.println(c);
 	}
 
 	public static void main(String[] args) {

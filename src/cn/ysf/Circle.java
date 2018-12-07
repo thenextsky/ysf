@@ -1,5 +1,7 @@
 package cn.ysf;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,13 @@ public class Circle {
 	 * 当前编号(不管死活)，从1开始
 	 */
 	private int currentNumber;
+	/**
+	 * 半径
+	 */
+	private int r = 260;
+	//圆心坐标
+	private int x = 300;
+	private int y = 300;
 
 	public synchronized int getCurrentNumber() {
 		return currentNumber;
@@ -31,7 +40,11 @@ public class Circle {
 	public synchronized void init(Param param) {
 		persons.clear();
 		for (int i = 1; i <= param.getN(); i++) {
-			persons.add(new Person(i, true));
+			double af = Math.PI*2/param.getN()*(i-1);
+			int x = (int) (r*Math.cos(af)+this.x);
+			int y = (int) (this.y-r*Math.sin(af));
+			persons.add(new Person(i, true,x,y));
+			System.out.println("("+x+","+y+")");
 		}
 		this.setCurrentNumber(param.getK());
 	}
@@ -76,4 +89,17 @@ public class Circle {
 		return "Circle [persons=" + persons + ", currentNumber=" + currentNumber + "]";
 	}
 
+	public void draw(Graphics g) {
+		Color c = g.getColor();
+		for(Person p:persons) {
+			p.draw(g);
+			if(p.getNumber()==currentNumber) {
+				g.setColor(Color.RED);
+				g.drawLine(x, y, p.getX(), p.getY());
+			}
+		}
+		g.setColor(c);
+	}
+
+	
 }
