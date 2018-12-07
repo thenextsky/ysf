@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Panel;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -27,13 +29,9 @@ public class MainFrame extends Frame {
 	
 	private static final int WIDTH = 800;
 	private static final int HEIGHT = 600;
-	private static final int status_stop = 0;
-	private static final int status_running = 1;
-	private static final int status_pause = 2;
-	private int status = status_stop;
+	
 	private int speed = 80;
 	private Image offScreenImage = null;
-	private Circle circle = new Circle();
 	private SF sf = new SF(speed);
 	
 	public static void main(String[] args) {
@@ -121,12 +119,26 @@ public class MainFrame extends Frame {
 			button_pause.setMargin(new Insets(0, 0, 0, 0));
 			button_pause.setFont(new Font("微软雅黑",Font.BOLD,20));
 			panelRightMenu.add(button_pause);
+			button_pause.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("暂停运行");
+					sf.setStatus(SF.status_pause);
+				}
+			});
 		}
 		{// 继续运行
 			JButton button_continue = new JButton("continue");
 			button_continue.setMargin(new Insets(0, 0, 0, 0));
 			button_continue.setFont(new Font("微软雅黑",Font.BOLD,20));
 			panelRightMenu.add(button_continue);
+			button_continue.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("继续运行");
+					sf.setStatus(SF.status_running);
+				}
+			});
 		}
 		{//滑动条
 			JLabel label_m = new JLabel("speed:50");
@@ -145,6 +157,7 @@ public class MainFrame extends Frame {
 					JSlider source = (JSlider) e.getSource();
 					label_m.setText("speed:" + source.getValue());
 					speed = source.getValue();
+					sf.setSpeed(speed);
 				}
 			});
 			panelRightMenu.add(slider);
@@ -154,10 +167,18 @@ public class MainFrame extends Frame {
 			button_start.setMargin(new Insets(0, 0, 0, 0));
 			button_start.setFont(new Font("微软雅黑",Font.BOLD,20));
 			panelRightMenu.add(button_start);
+			button_start.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(sf.getStatus()==SF.status_stop||sf.getStatus()==SF.status_pause) {
+						System.out.println("开始");
+						sf.setStatus(SF.status_running);
+						sf.run();
+					}
+				}
+			});
 		}
 		this.setVisible(true);// 放最后，不然控件显示不出来
-		Param param = new Param(20,5,1);
-		circle.init(param);
 		new Thread(new PaintThread()).start();// 启动线程
 	}
 
@@ -166,7 +187,9 @@ public class MainFrame extends Frame {
 //		g.setColor(Color.RED);
 //		g.drawRect(0, 0, 90, 90);
 //		g.fillOval(50, 50, 100, 100);
-		circle.draw(g);
+		if(sf!=null&&sf.getCircle()!=null) {
+			sf.getCircle().draw(g);
+		}
 	}
 	
 	public void update(Graphics g) {
