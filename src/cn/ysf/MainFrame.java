@@ -3,7 +3,9 @@ package cn.ysf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Panel;
 import java.awt.Toolkit;
@@ -23,10 +25,11 @@ import javax.swing.event.ChangeListener;
 public class MainFrame extends Frame {
 	private static final long serialVersionUID = 1L;
 	
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 400;
+	private static final int WIDTH = 800;
+	private static final int HEIGHT = 600;
 	
 	private int speed = 50;
+	private Image offScreenImage = null;
 
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame();
@@ -50,12 +53,8 @@ public class MainFrame extends Frame {
 			}
 		});
 		this.setLayout(null);
-		Panel panelMain = new Panel();
-		panelMain.setBounds(0, 20, 400, HEIGHT-20);
-		panelMain.setBackground(Color.BLUE);
-		this.add(panelMain);
 		Panel panelRightMenu = new Panel(new GridLayout(7, 2));
-		panelRightMenu.setBounds(400, 20, WIDTH-400, HEIGHT-20);
+		panelRightMenu.setBounds(600, 20, WIDTH-600, HEIGHT-20);
 		 panelRightMenu.setBackground(Color.YELLOW);
 		this.add(panelRightMenu);
 		{// N
@@ -149,6 +148,26 @@ public class MainFrame extends Frame {
 		new Thread(new PaintThread()).start();// 启动线程
 	}
 
+	@Override
+	public void paint(Graphics g) {// 画方法
+		g.setColor(Color.RED);
+		g.drawRect(0, 0, 90, 90);
+		g.fillOval(50, 50, 100, 100);
+	}
+	
+	public void update(Graphics g) {
+		if (offScreenImage == null) {
+			offScreenImage = this.createImage(WIDTH, HEIGHT);
+		}
+		Graphics gOffScreen = offScreenImage.getGraphics();
+		Color c = gOffScreen.getColor();
+		gOffScreen.setColor(Color.white);
+		gOffScreen.fillRect(0, 0, WIDTH, HEIGHT);
+		paint(gOffScreen);
+		g.drawImage(offScreenImage, 0, 0, null);
+		gOffScreen.setColor(c);
+	}
+	
 	/**
 	 * 数字输入框监听，防止输入太大的数字以及非法数字
 	 */

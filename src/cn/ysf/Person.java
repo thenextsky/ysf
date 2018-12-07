@@ -1,6 +1,11 @@
 package cn.ysf;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Person {
+	private int x, y;// 顶点坐标
+	final int d = 56, r = d / 2;
 	/**
 	 * 编号，从1开始
 	 */
@@ -9,6 +14,12 @@ public class Person {
 	 * 是否活着
 	 */
 	private boolean alive = true;
+	
+	public void draw(Graphics g) {
+		Color c = g.getColor();
+		g.fillOval(x, y, d, d);
+		g.setColor(c);
+	}
 
 	@Override
 	public int hashCode() {
@@ -33,7 +44,6 @@ public class Person {
 	}
 
 	public Person(int number, boolean alive) {
-		super();
 		this.number = number;
 		this.alive = alive;
 	}
