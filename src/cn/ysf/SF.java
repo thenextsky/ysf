@@ -17,7 +17,7 @@ public class SF {
 		Param param = new Param(10, 5, 1);
 		Circle circle = new Circle();
 		circle.init(param);
-		while(circle.getAliveCount()>1) {//循环直到只有一个人活着
+		while(circle.getAliveCount()>0) {//循环直到没人活着
 			int count = 0;
 			while(true) {
 				Person person = circle.getCurrent();
