@@ -44,7 +44,6 @@ public class Circle {
 			int x = (int) (r*Math.cos(af)+this.x);
 			int y = (int) (this.y-r*Math.sin(af));
 			persons.add(new Person(i, true,x,y));
-			System.out.println("("+x+","+y+")");
 		}
 		this.setCurrentNumber(param.getK());
 	}
@@ -98,6 +97,8 @@ public class Circle {
 				g.drawLine(x, y, p.getX(), p.getY());
 			}
 		}
+		g.setColor(Color.RED);
+		g.fillOval(x-5, y-5, 10, 10);
 		g.setColor(c);
 	}
 

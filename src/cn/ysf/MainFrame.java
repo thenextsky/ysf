@@ -31,10 +31,10 @@ public class MainFrame extends Frame {
 	private static final int status_running = 1;
 	private static final int status_pause = 2;
 	private int status = status_stop;
-	private int speed = 50;
+	private int speed = 80;
 	private Image offScreenImage = null;
 	private Circle circle = new Circle();
-	private SF sf = new SF();
+	private SF sf = new SF(speed);
 	
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame();
