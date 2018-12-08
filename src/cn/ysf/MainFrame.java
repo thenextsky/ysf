@@ -177,8 +177,7 @@ public class MainFrame extends Frame {
 					Param param = new Param(n, m, k);
 					sf.setParam(param);
 					sf.setStatus(SF.status_stop);
-					sf.run();//FIXME 点击开始有问题
-//					达到
+					sf.run();
 				}
 			});
 		}
