@@ -3,7 +3,7 @@ package cn.ysf;
  * 核心算法
  */
 public class SF {
-	private Param param;
+	private Param param = new Param(20, 5, 1);
 	private int speed = 0;
 	public static final int status_stop = 0;
 	public static final int status_running = 1;
@@ -53,12 +53,12 @@ public class SF {
 		if(thread==null) {
 			thread = new Thread(new Runnable() {
 				public void run() {
-					Param param = new Param(20, 5, 1);
+					status = SF.status_running;
 					circle = new Circle();
 					circle.init(param);
 					while(circle.getAliveCount()>0) {//循环直到没人活着
 						if(status==SF.status_stop) {
-							break;
+							return;
 						}
 						if(status==SF.status_pause) {
 							try {
@@ -71,7 +71,7 @@ public class SF {
 						int count = 0;
 						while(true) {
 							if(status==SF.status_stop) {
-								break;
+								return;
 							}
 							if(status==SF.status_pause) {
 								try {
@@ -101,7 +101,13 @@ public class SF {
 			});
 			thread.start();
 		}else {
-			//TODO
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			thread = null;
+			this.run();
 		}
 	}
 	

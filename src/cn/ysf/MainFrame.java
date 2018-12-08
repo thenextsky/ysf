@@ -60,6 +60,7 @@ public class MainFrame extends Frame {
 		panelRightMenu.setBounds(600, 20, WIDTH-600, HEIGHT-20);
 		 panelRightMenu.setBackground(Color.YELLOW);
 		this.add(panelRightMenu);
+		JTextField textField_n = new JTextField();
 		{// N
 			JLabel label_n = new JLabel("n:");
 			label_n.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -67,13 +68,13 @@ public class MainFrame extends Frame {
 			label_n.setFont(font);
 			panelRightMenu.add(label_n);
 			//
-			JTextField textField_n = new JTextField();
 			textField_n.setText("10");
 			textField_n.setFont(font);
 			textField_n.setHorizontalAlignment(JTextField.CENTER);
 			textField_n.addKeyListener(new NumberKeyListener());// 限制只能输入正整数&&不允许输入超过99
 			panelRightMenu.add(textField_n);
 		}
+		JTextField textField_k = new JTextField();
 		{// K
 			JLabel label_k = new JLabel("k:");
 			label_k.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -81,13 +82,13 @@ public class MainFrame extends Frame {
 			label_k.setFont(font);
 			panelRightMenu.add(label_k);
 			//
-			JTextField textField_k = new JTextField();
 			textField_k.setText("1");
 			textField_k.setFont(font);
 			textField_k.setHorizontalAlignment(JTextField.CENTER);
 			textField_k.addKeyListener(new NumberKeyListener());// 限制只能输入正整数&&不允许输入超过99
 			panelRightMenu.add(textField_k);
 		}
+		JTextField textField_m = new JTextField();
 		{// M
 			JLabel label_m = new JLabel("m:");
 			label_m.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -95,7 +96,6 @@ public class MainFrame extends Frame {
 			label_m.setFont(font);
 			panelRightMenu.add(label_m);
 			//
-			JTextField textField_m = new JTextField();
 			textField_m.setText("5");
 			textField_m.setFont(font);
 			textField_m.setHorizontalAlignment(JTextField.CENTER);
@@ -170,11 +170,15 @@ public class MainFrame extends Frame {
 			button_start.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(sf.getStatus()==SF.status_stop||sf.getStatus()==SF.status_pause) {
-						System.out.println("开始");
-						sf.setStatus(SF.status_running);
-						sf.run();
-					}
+					System.out.println("开始");
+					int n = Integer.parseInt(textField_n.getText());
+					int m = Integer.parseInt(textField_m.getText());
+					int k = Integer.parseInt(textField_k.getText());
+					Param param = new Param(n, m, k);
+					sf.setParam(param);
+					sf.setStatus(SF.status_stop);
+					sf.run();//FIXME 点击开始有问题
+//					达到
 				}
 			});
 		}
