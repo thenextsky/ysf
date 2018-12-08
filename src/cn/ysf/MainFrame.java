@@ -181,6 +181,18 @@ public class MainFrame extends Frame {
 				}
 			});
 		}
+		{// 打印结果
+			JButton button_print = new JButton("print");
+			button_print.setMargin(new Insets(0, 0, 0, 0));
+			button_print.setFont(new Font("微软雅黑",Font.BOLD,20));
+			panelRightMenu.add(button_print);
+			button_print.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("打印");
+				}
+			});
+		}
 		this.setVisible(true);// 放最后，不然控件显示不出来
 		new Thread(new PaintThread()).start();// 启动线程
 	}

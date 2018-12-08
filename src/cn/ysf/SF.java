@@ -11,7 +11,7 @@ public class SF {
 	private int status = status_stop;
 	private Circle circle = null;
 	private Thread thread = null;
-	
+	private StringBuilder result = new StringBuilder();
 	
 	public int getStatus() {
 		return status;
@@ -56,6 +56,7 @@ public class SF {
 					status = SF.status_running;
 					circle = new Circle();
 					circle.init(param);
+					result.setLength(0);
 					while(circle.getAliveCount()>0) {//循环直到没人活着
 						if(status==SF.status_stop) {
 							return;
@@ -88,6 +89,7 @@ public class SF {
 								if(count==param.getM()) {//从k=1开始报数，到m=5删除
 									circle.die(person);
 									System.out.println("刪除了："+person);
+									result.append(person.getNumber()+"出列\r\n");
 									sleep();
 									break;
 								}
@@ -125,8 +127,4 @@ public class SF {
 		}
 	}
 
-	public static void main(String[] args) {
-		new SF(80).run();
-	}
-	
 }

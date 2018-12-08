@@ -92,7 +92,9 @@ public class Circle {
 		Color c = g.getColor();
 		for(Person p:persons) {
 			p.draw(g);
-			if(p.getNumber()==currentNumber-1) {
+			if(p.getNumber()==currentNumber-1
+					||(currentNumber-1<=0&&p.getNumber()==persons.size())
+					) {
 				g.setColor(Color.RED);
 				g.drawLine(x, y, p.getX(), p.getY());
 			}
