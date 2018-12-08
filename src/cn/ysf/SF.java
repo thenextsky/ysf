@@ -11,7 +11,7 @@ public class SF {
 	private int status = status_stop;
 	private Circle circle = null;
 	private Thread thread = null;
-	private StringBuilder result = new StringBuilder();
+	public static StringBuilder result = new StringBuilder();
 	
 	public int getStatus() {
 		return status;

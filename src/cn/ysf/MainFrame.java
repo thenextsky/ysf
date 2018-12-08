@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Panel;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,12 +28,13 @@ import javax.swing.event.ChangeListener;
 public class MainFrame extends Frame {
 	private static final long serialVersionUID = 1L;
 	
-	private static final int WIDTH = 800;
+	private static final int WIDTH = 800+100;
 	private static final int HEIGHT = 600;
 	
 	private int speed = 80;
 	private Image offScreenImage = null;
 	private SF sf = new SF(speed);
+	private TextArea textArea_result = new TextArea();
 	
 	public static void main(String[] args) {
 		MainFrame mf = new MainFrame();
@@ -57,9 +59,13 @@ public class MainFrame extends Frame {
 		});
 		this.setLayout(null);
 		Panel panelRightMenu = new Panel(new GridLayout(7, 2));
-		panelRightMenu.setBounds(600, 20, WIDTH-600, HEIGHT-20);
-		 panelRightMenu.setBackground(Color.YELLOW);
+		panelRightMenu.setBounds(600, 20, WIDTH-600-100, HEIGHT-20);
+		panelRightMenu.setBackground(Color.YELLOW);
 		this.add(panelRightMenu);
+		
+		textArea_result.setEditable(false);
+		textArea_result.setBounds(600+200, 20, 100, HEIGHT-20);
+		this.add(textArea_result);
 		JTextField textField_n = new JTextField();
 		{// N
 			JLabel label_n = new JLabel("n:");
@@ -199,9 +205,7 @@ public class MainFrame extends Frame {
 
 	@Override
 	public void paint(Graphics g) {// 画方法
-//		g.setColor(Color.RED);
-//		g.drawRect(0, 0, 90, 90);
-//		g.fillOval(50, 50, 100, 100);
+		textArea_result.setText(SF.result.toString());
 		if(sf!=null&&sf.getCircle()!=null) {
 			sf.getCircle().draw(g);
 		}
