@@ -49,4 +49,11 @@ public class Param implements Serializable {
 		this.m = m;
 		this.k = k;
 	}
+
+	@Override
+	public String toString() {
+		return "Param [n=" + n + ", m=" + m + ", k=" + k + "]";
+	}
+	
+	
 }

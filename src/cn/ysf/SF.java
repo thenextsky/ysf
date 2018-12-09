@@ -96,7 +96,7 @@ public class SF {
 								sleep();
 							}
 						}
-						System.out.println("此时状态：currentNumber:"+circle.getCurrentNumber());
+						System.out.println("currentNumber:"+circle.getCurrentNumber());
 					}
 					SF.this.setStatus(SF.status_stop);
 				}

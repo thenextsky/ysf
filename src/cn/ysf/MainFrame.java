@@ -16,10 +16,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
@@ -31,7 +34,7 @@ public class MainFrame extends Frame {
 	private static final int WIDTH = 800+100;
 	private static final int HEIGHT = 600;
 	
-	private int speed = 80;
+	private int speed = 50;
 	private Image offScreenImage = null;
 	private SF sf = new SF(speed);
 	private TextArea textArea_result = new TextArea();
@@ -112,12 +115,39 @@ public class MainFrame extends Frame {
 			JButton button_export = new JButton("export");
 			button_export.setMargin(new Insets(0, 0, 0, 0));
 			button_export.setFont(new Font("微软雅黑",Font.BOLD,20));
+			button_export.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					Map<String, Object> map = new HashMap<>();
+					map.put("param",sf.getParam());
+					map.put("speed",speed);
+					FileUtil.save(map);
+				}
+			});
 			panelRightMenu.add(button_export);
 		}
 		{// 导入运行状态
 			JButton button_import = new JButton("import");
 			button_import.setMargin(new Insets(0, 0, 0, 0));
 			button_import.setFont(new Font("微软雅黑",Font.BOLD,20));
+			button_import.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("暂停运行");
+					sf.setStatus(SF.status_pause);
+					Map<String, Object> map = FileUtil.read();
+					Param param = (Param) map.get("param");
+					int speed = (int) map.get("speed");
+					System.out.println(param+","+speed);
+					JOptionPane.showMessageDialog(null, "导入完成,m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
+					//
+					sf.setParam(param);
+					sf.setSpeed(speed);
+					//FIXME 导入导出有问题
+					System.out.println("继续运行");
+					sf.setStatus(SF.status_running);
+				}
+			});
 			panelRightMenu.add(button_import);
 		}
 		{// 暂停运行
@@ -184,18 +214,6 @@ public class MainFrame extends Frame {
 					sf.setParam(param);
 					sf.setStatus(SF.status_stop);
 					sf.run();
-				}
-			});
-		}
-		{// 打印结果
-			JButton button_print = new JButton("print");
-			button_print.setMargin(new Insets(0, 0, 0, 0));
-			button_print.setFont(new Font("微软雅黑",Font.BOLD,20));
-			panelRightMenu.add(button_print);
-			button_print.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("打印");
 				}
 			});
 		}
