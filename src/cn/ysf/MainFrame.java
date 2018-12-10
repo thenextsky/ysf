@@ -119,9 +119,11 @@ public class MainFrame extends Frame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					Map<String, Object> map = new HashMap<>();
-					map.put("param",sf.getParam());
+					Param param = sf.getParam();
+					map.put("param",param);
 					map.put("speed",speed);
-					FileUtil.save(map);
+					String path = FileUtil.save(map);
+					JOptionPane.showMessageDialog(null, "导出完成,数据文件位于"+path+",m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
 				}
 			});
 			panelRightMenu.add(button_export);
@@ -139,13 +141,18 @@ public class MainFrame extends Frame {
 					Param param = (Param) map.get("param");
 					int speed = (int) map.get("speed");
 					System.out.println(param+","+speed);
+					System.out.println("导入完成,m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
 					JOptionPane.showMessageDialog(null, "导入完成,m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
 					//
+					textField_k.setText(param.getK()+"");
+					textField_m.setText(param.getM()+"");
+					textField_n.setText(param.getN()+"");
+					
 					sf.setParam(param);
 					sf.setSpeed(speed);
-					//FIXME 导入导出有问题
 					System.out.println("继续运行");
 					sf.setStatus(SF.status_running);
+					sf.run();
 				}
 			});
 			panelRightMenu.add(button_import);

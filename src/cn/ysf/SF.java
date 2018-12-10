@@ -105,6 +105,7 @@ public class SF {
 		}else {
 			try {
 				thread.join();
+				System.out.println("thread.join();");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

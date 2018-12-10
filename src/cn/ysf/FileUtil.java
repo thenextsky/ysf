@@ -12,7 +12,7 @@ import java.util.Map;
  * 文件工具类：保存、读取算法执行结果
  */
 public class FileUtil {
-	public static void save(Map<String,Object> map) {
+	public static String save(Map<String,Object> map) {
 		ObjectOutputStream oos = null;
 		try {
 			File file = new File("ysf.data");
@@ -21,8 +21,10 @@ public class FileUtil {
 			}
 			oos = new ObjectOutputStream(new FileOutputStream(file));
 			oos.writeObject(map);
+			return file.getAbsolutePath();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return null;
 		} finally {
 			if(oos!=null) {
 				try {
