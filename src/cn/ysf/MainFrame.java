@@ -135,23 +135,20 @@ public class MainFrame extends Frame {
 			button_import.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					System.out.println("暂停运行");
-					sf.setStatus(SF.status_pause);
+					System.out.println("停止运行");
+					sf.setStatus(SF.status_stop);
 					Map<String, Object> map = FileUtil.read();
 					Param param = (Param) map.get("param");
 					int speed = (int) map.get("speed");
-					System.out.println(param+","+speed);
 					System.out.println("导入完成,m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
 					JOptionPane.showMessageDialog(null, "导入完成,m="+param.getM()+",n="+param.getN()+",k="+param.getK()+",speed="+speed);
 					//
 					textField_k.setText(param.getK()+"");
 					textField_m.setText(param.getM()+"");
 					textField_n.setText(param.getN()+"");
-					
 					sf.setParam(param);
 					sf.setSpeed(speed);
 					System.out.println("继续运行");
-					sf.setStatus(SF.status_running);
 					sf.run();
 				}
 			});
@@ -246,6 +243,7 @@ public class MainFrame extends Frame {
 		gOffScreen.fillRect(0, 0, WIDTH, HEIGHT);
 		paint(gOffScreen);
 		g.drawImage(offScreenImage, 0, 0, null);
+//		System.out.println("update........................................");
 		gOffScreen.setColor(c);
 	}
 	
@@ -266,6 +264,7 @@ public class MainFrame extends Frame {
 		}
 	}
 
+	
 	private class PaintThread implements Runnable {// 线程类（重画用的）
 		public void run() {
 			while (true) {

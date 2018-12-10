@@ -49,7 +49,7 @@ public class SF {
 		this.param = param;
 	}
 	
-	public void run() {
+	public synchronized void run() {
 		if(thread==null) {
 			thread = new Thread(new Runnable() {
 				public void run() {
