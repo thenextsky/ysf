@@ -16,6 +16,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -221,6 +223,25 @@ public class MainFrame extends Frame {
 					sf.setParam(param);
 					sf.setStatus(SF.status_stop);
 					sf.run();
+				}
+			});
+		}
+		{// 打印
+			JButton button_print = new JButton("print");
+			button_print.setMargin(new Insets(0, 0, 0, 0));
+			button_print.setFont(new Font("微软雅黑",Font.BOLD,20));
+			panelRightMenu.add(button_print);
+			button_print.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("打印");
+					File file = new File("result.txt");
+					try(FileOutputStream fos = new FileOutputStream(file);){
+						fos.write(SF.result.toString().getBytes("UTF-8"));
+					}catch (Exception e2) {
+						e2.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null, "运行结果打印完成，结果保存在"+file.getAbsolutePath());
 				}
 			});
 		}
