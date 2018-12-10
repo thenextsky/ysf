@@ -69,6 +69,7 @@ public class MainFrame extends Frame {
 		textArea_result.setEditable(false);
 		textArea_result.setBounds(600+200, 20, 100, HEIGHT-20);
 		this.add(textArea_result);
+		JSlider slider = new JSlider();
 		JTextField textField_n = new JTextField();
 		{// N
 			JLabel label_n = new JLabel("n:");
@@ -148,6 +149,8 @@ public class MainFrame extends Frame {
 					textField_n.setText(param.getN()+"");
 					sf.setParam(param);
 					sf.setSpeed(speed);
+					MainFrame.this.speed = speed;
+					slider.setValue(speed);
 					System.out.println("继续运行");
 					sf.run();
 				}
@@ -180,6 +183,7 @@ public class MainFrame extends Frame {
 				}
 			});
 		}
+		
 		{//滑动条
 			JLabel label_m = new JLabel("speed:50");
 			label_m.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -187,7 +191,6 @@ public class MainFrame extends Frame {
 			label_m.setFont(new Font("微软雅黑",Font.BOLD,18));
 			panelRightMenu.add(label_m);
 			//
-			JSlider slider = new JSlider();
 			slider.setPaintTicks(true);  
 			slider.setMajorTickSpacing(20);  
 	        slider.setMinorTickSpacing(5);
@@ -243,7 +246,6 @@ public class MainFrame extends Frame {
 		gOffScreen.fillRect(0, 0, WIDTH, HEIGHT);
 		paint(gOffScreen);
 		g.drawImage(offScreenImage, 0, 0, null);
-//		System.out.println("update........................................");
 		gOffScreen.setColor(c);
 	}
 	
